@@ -1,13 +1,19 @@
 package dev.be.moduleapi.service;
 
 import dev.be.modulecommon.enums.CodeEnum;
+import dev.be.modulecommon.service.CommonDemoService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class DemoService {
+
+    private final CommonDemoService demoService;
     public String save() {
         System.out.println(CodeEnum.SUCCESS.getCode());
+        System.out.println(demoService.commenService());
         return "save";
     }
 
