@@ -1,5 +1,7 @@
 package dev.be.moduleapi.controller;
 
+import dev.be.moduleapi.response.CommonResponse;
+import dev.be.modulecommon.enums.CodeEnum;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +28,11 @@ public class DemoController {
     @GetMapping("/find")
     public String find() {
         return demoService.find();
+    }
+
+    @GetMapping("/exception")
+    public String exception() {
+        return demoService.exception();
     }
 
 }
