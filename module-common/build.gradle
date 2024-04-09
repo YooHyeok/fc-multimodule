@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.2'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java-library' // dependency 추가시 api라는 함수 키워드를 사용하기위한 설정
 }
 
 group = 'dev.be'
@@ -26,6 +27,10 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    /* 공통 dependency 추가 */
+    api 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'mysql:mysql-connector-java'
 }
 
 tasks.named('test') {
