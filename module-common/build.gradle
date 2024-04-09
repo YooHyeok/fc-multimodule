@@ -38,3 +38,32 @@ tasks.named('test') {
 }
 
 tasks.register('prepareKotlinBuildScriptModel') {}
+
+tasks.bootJar { enabled = false }
+/* 기본값 true *.jar파일 생성
+파일 안에 어플리케이션을 실행하는데 필요한 디펜던시, 클래스, 리소스를 포함하고 있어 java -jar옵션으로 jar파일을 실행시킬 수 있게 된다.
+그러나 Common module은 다른 모듈에서 참조하는 목적의 모듈이기 때문에 실행 가능한 jar파일을 만들 필요가 없다.
+그렇기에 초기에 application.class를 삭제했었다.
+만약 bootjar 옵션을 true로 했을 경우 Main클래스 즉, application.class를 찾게되는데 앞서 말한것처럼 Common에는 없기 때문에 에러가 발생하게 된다. */
+tasks.jar { enabled=true }
+/* 기본값 true *.plane.jar파일 생성
+해당 기본값은 *.plane.jar 와 같이 plane이라는 네이밍이 붙게 된다.
+plane은 dependency를 가지고 있지 않다.
+즉, 클래스와 리소스만 포함하고 있어 java -jar 와 같이 jar를 실행시킬 경우
+plane은 server를 실행시킬수 없게 된다. */
+
+/*
+[build 명령]
+./gradlew clean :module-api:buildNeeded --stacktrace --info --refresh-dependencies -x test
+
+stacktrace: 빌드를 진행하며 발생하는 로깅 혹은 예외를 빠르게 캐치할 수 있도록 로그를 쌓아서 보여달라
+info: 로깅레벨을 info 이상으로 설정 (debug -> info -> warn -> error)
+refresh-dependencies: dependecy를 한번 더 refresh
+-x test: build시 test코드 체크는 skip - 예를들어 타인이 작성한 테스트코드는 타인의 브랜치에서 수정해야 정상반영 되는 등의 이유 */
+
+/*
+[jar파일 server구동]
+1. cd module-api/build/libs
+2. ls 목록확인
+↓ plain 없는 jar파일을 실행 ↓
+3. java -jar module-api-0.0.1-SNAPSHOT.jar*/
