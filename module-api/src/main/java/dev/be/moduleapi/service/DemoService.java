@@ -8,11 +8,21 @@ import dev.be.modulecommon.service.CommonDemoService;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class DemoService {
+    /**
+     * IntelliJ 우측 상단의 start debug/run configuration - edit - Active Profiles에 {env} 값을 지정한다.
+     * java -jar 명령
+     * 1. cd module
+     * 2. java -jar "-Dspring.profiles.active=local" module-api-0.0.1-SNAPSHOT.jar
+     * 2. java -jar "-Dspring.profiles.active=beta" module-api-0.0.1-SNAPSHOT.jar
+     */
+    @Value("${profile-name}")
+    private String name;
 
     private final CommonDemoService demoService;
     private final MemberRepository memberRepository;
@@ -20,6 +30,7 @@ public class DemoService {
     public String save() {
 //        System.out.println(CodeEnum.SUCCESS.getCode());
 //        System.out.println(demoService.commenService());
+        System.out.println("name = " + name);
         memberRepository.save(Member.builder()
                 .name(Thread.currentThread().getName())
                 .build());
